@@ -3,6 +3,7 @@ package com.application.dao.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -57,10 +58,12 @@ public class DataSourceConfig {
         return new HikariDataSource(slaveHikariConfig());
     }
 
+    @Autowired
+    DbContextHolder dbContextHolder;
 
     @Bean("RoutingDataSource")
     public RoutingDataSource routingDataSource() {
-        RoutingDataSource dataSource = new RoutingDataSource();
+        RoutingDataSource dataSource = new RoutingDataSource(dbContextHolder);
         dataSource.setDefaultTargetDataSource(masterDataSource());
         Map<Object, Object> targets = new HashMap<>();
         targets.put(DataSourceType.MASTER, masterDataSource());

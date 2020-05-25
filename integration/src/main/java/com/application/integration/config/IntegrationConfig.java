@@ -26,6 +26,18 @@ import org.springframework.context.annotation.PropertySources;
 public class IntegrationConfig implements InitializingBean {
 
     private SampleConfig sampleConfig;
+    private PayrollConfig payrollConfig;
+
+
+    @Getter
+    @Setter
+    @ToString
+    public static class PayrollConfig {
+        private String createPayrollUrl;
+        private String getPayrollInfoUrl;
+    }
+
+
 
 
     @Setter

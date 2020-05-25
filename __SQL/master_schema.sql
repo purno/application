@@ -12,3 +12,30 @@ CREATE DATABASE `APPLICATION`;
   PRIMARY KEY (`ID`),
   UNIQUE KEY `INDEX_CLIENT_EMAIL` (`CLIENT_EMAIL`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+CREATE TABLE `EMPLOYEE_SYNC_CRON` (
+  `EMPLOYEE_ID` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `CREATED_ON` datetime NOT NULL,
+  `UPDATED_ON` datetime NOT NULL,
+  `NEXT_TRIGGER_TIME` datetime NOT NULL,
+  PRIMARY KEY (`EMPLOYEE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `EMPLOYEE` (
+  `ID` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `CREATED_ON` datetime NOT NULL,
+  `UPDATED_ON` datetime NOT NULL,
+  `AGE` int(3) NOT NULL,
+  `ALIAS` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `META_INFO` text COLLATE utf8mb4_general_ci,
+  `NAME` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `PAY_ROLL_EMP_ID` bigint(20) DEFAULT NULL,
+  `SYNC_STATUS` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `VERSION` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `INDEX_ALIAS` (`ALIAS`),
+  KEY `INDEX_NAME` (`NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

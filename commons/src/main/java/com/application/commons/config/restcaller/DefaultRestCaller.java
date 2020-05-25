@@ -167,6 +167,11 @@ public class DefaultRestCaller extends AbstractRestApiService implements RestCal
     }
 
     @Override
+    public <T> ResponseEntity<String> restCall(){
+        return restCall(null);
+    }
+
+    @Override
     public <T> ResponseEntity<String> restCall(@Nullable T postBody) {
         String body = null;
         if (this.isPostBodyRequired() && Objects.nonNull(postBody)) {

@@ -44,7 +44,7 @@ public class ExecutorServiceProvider {
 		
 		switch (cronType) {
 			case CRON_TYPE_SYNC:
-			executorConfig = cronConfig.getSyncGeoLocationCronConfig().getExecutorConfig();
+			executorConfig = cronConfig.getSyncPayrollCronConfig().getExecutorConfig();
 			return new ThreadPoolExecutor(executorConfig.getCorePoolSize(), executorConfig.getMaxPoolSize(), executorConfig.getKeepAliveTime(), TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(executorConfig.getMaxPoolSize()));
 		default:
 			throw new RuntimeException("case not handled for crontype: " + cronType);

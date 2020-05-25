@@ -8,4 +8,5 @@ import java.io.IOException;
 public interface RestCaller {
 
     <T> ResponseEntity<String> restCall(@Nullable T postBody) throws IOException;
+    <T> ResponseEntity<String> restCall() throws IOException;
 }

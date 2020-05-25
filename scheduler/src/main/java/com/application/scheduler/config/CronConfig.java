@@ -26,7 +26,7 @@ import org.springframework.context.annotation.PropertySources;
 public class CronConfig implements InitializingBean {
 	
 
-	private SyncGeoLocationCronConfig syncGeoLocationCronConfig;
+	private PayrollSyncCronConfig syncPayrollCronConfig;
 
 	@Setter
 	@Getter
@@ -38,12 +38,13 @@ public class CronConfig implements InitializingBean {
 		private ExecutorConfig executorConfig;
 		private Integer retryCountThreshold;
 		private Integer triggerTimeMultiplier;
+		private Integer updatedBeforeMinutes;
 	}
 	
 	@ToString(callSuper = true)
 	@Setter
 	@Getter
-	public static class SyncGeoLocationCronConfig extends ChildCronConfig{
+	public static class PayrollSyncCronConfig extends ChildCronConfig{
 		
 	}
 
