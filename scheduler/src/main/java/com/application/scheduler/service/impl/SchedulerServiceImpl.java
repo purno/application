@@ -41,7 +41,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         while (moreRecordsRemaining) {
             log.info("fetching next set of records for page {} size {} ", pageNum, pageSize);
             Pageable pageRequest = PageRequest.of(pageNum, pageSize);
-            List<String> ObjectList = schedulerHelper.fetchObjectList(pageRequest);
+            List<String> ObjectList = schedulerHelper.fetchObjectList(pageRequest, syncStatusList);
             if (ObjectList.size() == 0) {
                 log.info("No more records..");
                 moreRecordsRemaining = false;

@@ -4,6 +4,7 @@ import com.application.commons.exceptions.BusinessException;
 import com.application.commons.producers.MessageProducer;
 import com.application.dao.annotations.ReadOnly;
 import com.application.dao.entities.EmployeeSyncCron;
+import com.application.dao.enums.SyncStatus;
 import com.application.dao.jparepository.EmployeeSyncCronDao;
 import com.application.scheduler.config.CronConfig;
 import com.application.scheduler.cron.CronType;
@@ -38,9 +39,8 @@ public class SchedulerHelperImpl implements SchedulerHelper {
 
     @Override
     @ReadOnly
-    public List<String> fetchObjectList(Pageable pageRequest) {
-        Page<EmployeeSyncCron> list = cronDao.findAll(pageRequest);
-        return list.get().map(EmployeeSyncCron::getEmployeeId).collect(Collectors.toList());
+    public List<String> fetchObjectList(Pageable pageRequest, List<SyncStatus> syncStatusList) {
+        return cronDao.fetchApplicableEmployeeIds(syncStatusList, LocalDateTime.now(), pageRequest);
     }
 
 
