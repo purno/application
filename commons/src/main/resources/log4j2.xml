@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG" monitorInterval="30">
+
+    <Properties>
+        <Property name="LOG_PATTERN">${hostName} %d{DATE} [%X{traceId}/%X{spanId}] %-5p [%t] %M (%F:%L) - %m%ex%n</Property>
+        <Property name="host">${hostName}</Property>
+        <Property name="archived">./__logs</Property>
+        <Property name="APP_LOG_ROOT">./__logs/${hostName}</Property>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="fileLogger" fileName="${APP_LOG_ROOT}_application.log"
+                     filePattern="${archived}/${host}_application-%d{yyyy-MM-dd-HH}.log">
+
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="exceptionsFileLogger" fileName="${APP_LOG_ROOT}_application_exceptions.log"
+                     filePattern="${archived}/${host}_application_exceptions-%d{yyyy-MM-dd}.log">
+
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.interivew" additivity="false" level="debug" includeLocation="true">
+            <AppenderRef ref="fileLogger"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" additivity="false" level="debug"
+                includeLocation="true">
+            <AppenderRef ref="fileLogger"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Root level="error" includeLocation="true">
+            <AppenderRef ref="fileLogger"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Logger name="org.hibernate" level="debug" additivity="false">
+            <AppenderRef ref="fileLogger"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.hibernate.type.descriptor.sql" level="debug" additivity="false">
+            <AppenderRef ref="fileLogger"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.hibernate.stat" level="debug" additivity="false">
+            <AppenderRef ref="fileLogger"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="ApplicationEngineExceptionsLogger" additivity="false" level="trace" includeLocation="true">
+            <AppenderRef ref="exceptionsFileLogger"/>
+        </Logger>
+
+    </Loggers>
+
+
+</Configuration>

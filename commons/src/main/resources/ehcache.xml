@@ -1,0 +1,43 @@
+<!-- /** * *
+	*
+	* Some useful references:
+	*
+	* @see <a href="https://springframework.guru/using-ehcache-3-in-spring-boot/"></a>
+	* @see <a href="https://howtodoinjava.com/spring-boot2/ehcache3-config-example/"></a>
+	* @see <a href="http://www.ehcache.org/ehcache.xml/"></a>
+	*
+	* */ -->
+
+<config
+        xmlns='http://www.ehcache.org/v3'
+>
+
+    <!-- Persistent cache directory -->
+    <persistence directory="java.io.tmpdir"/>
+
+
+    <!-- Default cache template -->
+    <cache-template name="default">
+
+        <listeners>
+            <listener>
+                <class>com.application.commons.listeners.EHCacheListener</class>
+                <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
+                <event-ordering-mode>UNORDERED</event-ordering-mode>
+                <events-to-fire-on>CREATED</events-to-fire-on>
+                <events-to-fire-on>EXPIRED</events-to-fire-on>
+                <events-to-fire-on>EVICTED</events-to-fire-on>
+            </listener>
+        </listeners>
+
+    </cache-template>
+
+    <cache alias="clientCache" uses-template="default">
+        <expiry>
+            <ttl unit="minutes">30</ttl>
+        </expiry>
+        <resources>
+            <heap unit="MB">30</heap>
+        </resources>
+    </cache>
+</config>
