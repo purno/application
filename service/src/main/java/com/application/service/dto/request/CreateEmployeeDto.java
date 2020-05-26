@@ -2,6 +2,7 @@ package com.application.service.dto.request;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class CreateEmployeeDto {
 
     String name;

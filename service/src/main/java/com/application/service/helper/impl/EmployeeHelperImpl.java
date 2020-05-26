@@ -1,8 +1,10 @@
 package com.application.service.helper.impl;
 
 import com.application.commons.utils.JsonUtils;
+import com.application.dao.annotations.ReadOnly;
 import com.application.dao.constants.EmployeeMetaDataKeys;
 import com.application.dao.entities.Employee;
+import com.application.dao.enums.SyncStatus;
 import com.application.dao.jparepository.EmployeeDao;
 import com.application.service.dto.request.CreateEmployeeDto;
 import com.application.service.helper.EmployeeHelper;
@@ -10,10 +12,13 @@ import com.application.service.vo.PayrollInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -49,5 +54,12 @@ public class EmployeeHelperImpl implements EmployeeHelper {
         return metaInfoMap;
     }
 
+
+    @ReadOnly
+    @Override
+    @Cacheable(value = "employeeCache", unless = "#result == null")
+    public List<Employee> fetchEmployeeWithParams(String name, List<SyncStatus> statusList, int age, List<String> empId, String alias, Pageable pageable){
+           return employeeDao.getApplicableEmployeeList(name, statusList, age, empId, alias, pageable);
+    }
 
 }
